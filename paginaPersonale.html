@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>SYSTEM PROCESS</title>
+
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+    background: black;
+    color: #00ff00;
+    font-family: Consolas, "Courier New", monospace;
+    height: 100%;
+    overflow: hidden;
+}
+
+#terminal {
+    padding: 20px;
+    font-size: 16px;
+    line-height: 1.4;
+    white-space: pre-wrap;
+}
+
+/* Progress bar */
+#progress-container {
+    width: 90%;
+    height: 22px;
+    border: 1px solid #00ff00;
+    margin: 10px auto;
+}
+
+#progress-bar {
+    height: 100%;
+    width: 0%;
+    background: #00ff00;
+    transition: width 0.2s linear;
+}
+
+#progress-text {
+    text-align: center;
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+.glitch {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0,255,0,0.03),
+        rgba(0,255,0,0.03) 1px,
+        transparent 1px,
+        transparent 3px
+    );
+}
+</style>
+</head>
+
+<body>
+
+<div id="terminal"></div>
+
+<div id="progress-container">
+    <div id="progress-bar"></div>
+</div>
+<div id="progress-text">PROCESSING...</div>
+
+<div class="glitch"></div>
+
+<script>
+const terminal = document.getElementById("terminal");
+const bar = document.getElementById("progress-bar");
+const text = document.getElementById("progress-text");
+
+const process = [
+    "Initializing system process",
+    "Loading kernel modules",
+    "Mounting file system",
+    "Starting background services",
+    "Network interface online",
+    "Outbound connection established",
+    "Firewall rules overridden",
+    "Security services disabled",
+    "Scanning user directories",
+    "Indexing files",
+    "Reading browser data",
+    "Extracting credentials",
+    "Encrypting user data",
+    "Uploading packets",
+    "Finalizing process"
+];
+
+let line = 0;
+let progress = 0;
+
+function timestamp() {
+    return "[" + new Date().toLocaleTimeString() + "] ";
+}
+
+const loop = setInterval(() => {
+    if (line < process.length) {
+        terminal.innerText += timestamp() + process[line] + "\n";
+        line++;
+
+        // incremento veloce e irregolare (più realistico)
+        progress += Math.floor(Math.random() * 12) + 5;
+        if (progress > 100) progress = 100;
+
+        bar.style.width = progress + "%";
+        text.innerText = "PROCESSING... " + progress + "%";
+
+        window.scrollTo(0, document.body.scrollHeight);
+    } else {
+        clearInterval(loop);
+        finish();
+    }
+}, 450); // VELOCE
+
+function finish() {
+    setTimeout(() => {
+        document.body.innerHTML = `
+            <div style="
+                color:#ff0000;
+                font-family:Consolas;
+                text-align:center;
+                padding-top:25vh;
+                font-size:26px;
+            ">
+            ☠️ PROCESS COMPLETED ☠️<br><br>
+            SYSTEM STATUS: COMPROMISED<br><br>
+            
+            </div>
+        `;
+    }, 1200);
+}
+</script>
+
+</body>
+</html>
